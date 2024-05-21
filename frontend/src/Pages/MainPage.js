@@ -3,6 +3,7 @@ import "./mainPages.css";
 
 export function MainPage() {
   const [inputText, setInputText] = useState('');
+  const [resultDepth, setResultDepth] = useState(''); 
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -16,6 +17,7 @@ export function MainPage() {
       });
       const data = await response.json();
       console.log('Response from server:', data);
+      setResultDepth(data.depth); 
     } catch (error) {
       console.error('Error posting data:', error);
     }
@@ -31,11 +33,12 @@ export function MainPage() {
       <form className="input-box" onSubmit={handleSubmit}>
         <textarea 
           id="code-input" 
-          placeholder='Write your C program here...' 
+          placeholder='Write your program here...' 
           value={inputText}
           onChange={handleInputChange}
         ></textarea>
         <button type="submit">Submit</button>
+        {resultDepth && <div className="result-display">Big O Complexity: O(N^{resultDepth})</div>}
       </form>
     </div>
   );
